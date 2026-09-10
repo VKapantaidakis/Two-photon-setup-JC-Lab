@@ -1,0 +1,280 @@
+\appendix
+
+\section{Technical appendix}
+
+\subsection{Purpose of the technical protocol}
+
+This appendix describes the construction, alignment, and operation of the conical visual stimulation system used for behavioral testing and two-photon calcium imaging. The system was developed to present controlled visual stimuli to \textit{Drosophila melanogaster} while preserving optical access for two-photon microscopy.\\
+
+The appendix contains the engineering details that are too technical for the main Materials and Methods: screen geometry, 3D-printed components, projection-path calculations, optical alignment, spectral filtering, Arduino synchronization, MATLAB/ViRMEn control, and practical setup steps.\\
+
+\subsection{Required components}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{p{4cm} p{6cm} p{5cm}}
+\hline
+\textbf{Component} & \textbf{Specification} & \textbf{Purpose} \\
+\hline
+Projector & Texas Instruments DLP3010 LightCrafter & Visual stimulus projection \\
+Projection surface & Rear-projection film & Final conical visual stimulus surface \\
+Paper cone template & A4 printed truncated-cone template & Initial screen centering and fit check \\
+Folding mirror & Planar mirror, approximately 50~$\times$~70~mm clear aperture & Redirects projector beam upward \\
+3D-printed screen support & PLA conical support and retaining rings & Holds projection film in conical geometry \\
+3D-printed projector holder & Adjustable projector holder & Positions projector relative to mirror and breadboard \\
+Circular mounts & 3D-printed screen mounting rings/supports & Stabilize conical screen \\
+Ball holders & 9~mm ball holder, 65~mm; 6~mm ball holder, 32~mm & Adjustable positioning of mounted components \\
+Bandpass filter & 374/50~nm filter & Restricts projected stimulus spectrum \\
+Arduino & Arduino Uno & Trigger detection and frame counting \\
+DAQ interface & Microscope DAQ system & Imaging/stimulus synchronization \\
+Computer & MATLAB 2018a with ViRMEn & Stimulus generation and experiment control \\
+Optical breadboard & Microscope breadboard & Mechanical reference plane \\
+Fly holder & Custom holder & Stabilizes tethered fly for imaging \\
+\hline
+\end{tabular}
+\caption{Main components used to build and operate the conical visual stimulation system.}
+\label{tab:appendix_components}
+\end{table}
+
+\subsection{Conical screen design}
+
+\subsubsection{Behavioral arena screen}
+
+The behavioral arena used the full-size conical screen design. The visible projection surface was a truncated cone with a large diameter of 220~mm, a small diameter of 40~mm, and a vertical height of 60~mm. The corresponding radii were 110~mm and 20~mm.\\
+
+The cone wall angle relative to the vertical axis was calculated from the radial difference and vertical height:\\
+
+\[
+\theta = \tan^{-1}\left(\frac{110 - 20}{60}\right) = \tan^{-1}(1.5) = 56.3^\circ
+\]
+
+The complementary groove angle relative to the horizontal ring plane was:\\
+
+\[
+\phi = 90^\circ - 56.3^\circ = 33.7^\circ
+\]
+
+The retaining grooves were therefore designed with an angle of approximately 33.7$^\circ$ relative to the ring plane. In practice, a groove angle of approximately 34$^\circ$ can be used to simplify manufacturing and allow tolerance for film insertion.\\
+
+The full-size behavioral arena STL used a 2~mm retaining groove and had an approximate external bounding box of 240~$\times$~240~$\times$~80~mm. This STL corresponds to the behavioral arena screen, not to the two-photon screen.\\
+
+\subsubsection{Two-photon conical screen}
+
+The two-photon conical screen was a reduced version of the behavioral arena design. It preserved the same conical design principle but used smaller dimensions to fit within the microscope workspace.\\
+
+The final two-photon projection surface had a large visible diameter of 110~mm, a small visible diameter of 20~mm, and a vertical height of 30~mm. The top of the visible screen was positioned 250~mm above the optical breadboard, placing the bottom of the visible screen at 218~mm and the midpoint of the conical projection surface at 234~mm above the breadboard.\\
+
+\subsubsection{A4 paper cone template}
+
+Before mounting the rear-projection film, an A4 paper cone template was used to check the conical screen geometry and centering. The template was generated using the Templatemaker truncated-cone tool with bottom diameter = 110~mm, top diameter = 20~mm, height = 30~mm, page preset = A4, and units = mm.\\
+
+The printed paper template was inserted into the screen support to verify that the screen was centered and that the conical geometry matched the intended dimensions. After this check, the paper template was removed and the rear-projection film was mounted in the retaining grooves.\\
+
+The exact exported PDF template and printed scale used during the experiment should be uploaded to the GitHub repository.\\
+
+\subsection{3D printing and assembly}
+
+\subsubsection{Printing material and printer}
+
+The conical screen components and mounting parts were fabricated by fused deposition modelling. The ring used during setup testing was printed from Prusament PLA Prusa Galaxy Black filament on an Original Prusa XL 5-Toolhead 3D Printer with enclosure.\\
+
+Black PLA was selected to reduce unwanted reflections from the support structure during visual stimulation. A more matte charcoal-black PLA filament, Polymaker Panchroma Matte PLA, was considered as an alternative material to further reduce surface reflectivity. Unless otherwise stated, the printed ring used in the setup was made from Prusament PLA Prusa Galaxy Black.\\
+
+\subsubsection{Screen support and projection-film assembly}
+
+The screen support was designed in OpenSCAD. The design contained upper and lower retaining rings with angled grooves matched to the cone wall angle. This allowed the projection film to follow the conical surface rather than being forced into a vertical slot.\\
+
+Water-soluble support material was used where required to preserve the angled groove geometry during printing. After printing, the support material was removed and the groove surfaces were inspected. The A4 paper cone template was then used to confirm fit and centering before final film mounting.\\
+
+After the paper-template check, the rear-projection film was cut to fit the conical surface and inserted into the upper and lower grooves. The film was mounted under light tension to reduce wrinkles while preserving the intended conical geometry.\\
+
+\subsubsection{Projector holder}
+
+A custom 3D-printed projector holder was designed in OpenSCAD to position the Texas Instruments DLP3010 LightCrafter projector relative to the optical breadboard and folding mirror. The holder aligned with the M6-hole grid of the support system and allowed adjustment of the projector beam height.\\
+
+The projector holder STL had an approximate external bounding box of 75.2~$\times$~116.0~$\times$~80.0~mm. The OpenSCAD design used a projector width of 73.2~mm, a projector depth of 73.2~mm, and a thicker projector section of 75.2~mm. The holder plate height was 80~mm, with a 5~mm holder thickness and a 7~mm base plate.\\
+
+The holder included M6-compatible mounting grooves. The M6 groove width was 6.3~mm, the groove length was 50~mm, and the grid spacing was 25~mm. The support wall thickness was 4~mm and the support height was 10~mm.\\
+
+\subsubsection{Circular mounts and ball holders}
+
+Additional 3D-printed mounting parts were used to position and stabilize the projection system. These included circular mounts for the conical screen and ball-joint holders for adjustable positioning.\\
+
+The design files included a 9~mm ball holder with a 65~mm length and a 6~mm ball holder with a 32~mm length. These components were used for mechanical adjustment and stabilization during setup alignment.\\
+
+\subsection{Projection-path geometry}
+
+\subsubsection{Folded optical path}
+
+A folded projection path was used to fit the projector into the restricted space around the two-photon microscope. The projector beam travelled horizontally from the projector lens to a planar mirror mounted at approximately 45$^\circ$. The mirror reflected the beam vertically upward onto the conical rear-projection screen.\\
+
+The relevant optical constraint is the total folded path length:\\
+
+\[
+L = x + y
+\]
+
+where $x$ is the horizontal distance from the projector beam exit to the mirror center, and $y$ is the vertical distance from the mirror center to the screen mid-height.\\
+
+\subsubsection{Full-size screen optical calculation}
+
+For the full-size behavioral arena screen, the maximum screen diameter was 220~mm. Assuming a projector throw ratio of $T=1.2$, the total folded optical path was:\\
+
+\[
+L = T D_{\max} = 1.2 \times 220 = 264~\mathrm{mm}
+\]
+
+Thus:\\
+
+\[
+x + y = 264~\mathrm{mm}
+\]
+
+A balanced practical split was:\\
+
+\[
+x \approx 130~\mathrm{mm}, \quad y \approx 134~\mathrm{mm}
+\]
+
+where $x$ is the projector-to-mirror distance and $y$ is the mirror-to-screen-midpoint distance.\\
+
+\subsubsection{Two-photon screen projection geometry}
+
+For the reduced two-photon screen, the projection path was adjusted to fit the microscope workspace. In the final configuration, the center of the projector beam and the mirror center were positioned 120~mm above the optical breadboard. The midpoint of the conical projection surface was positioned 234~mm above the breadboard, giving a vertical mirror-to-screen-midpoint distance of 114~mm.\\
+
+The lens-to-mirror distance was kept at approximately 35--40~mm to reduce beam clipping at the mirror. A mirror with an approximate clear aperture of 50~$\times$~70~mm was used.\\
+
+\subsection{Optical alignment}
+
+\subsubsection{Paper-template check}
+
+Before the rear-projection film was mounted, the printed A4 paper cone template was inserted into the screen support to check the fit and centering of the conical geometry. If the template did not sit symmetrically, the screen support was re-seated and checked for obstruction before mounting the final projection film.\\
+
+\subsubsection{Calibration image}
+
+A calibration image containing concentric circles, radial spokes, and orthogonal crosshairs was used for projector, mirror, and screen alignment. The calibration image was projected within a square active projection region to avoid distortions caused by the native rectangular projector raster.\\
+
+\subsubsection{Mechanical alignment}
+
+Mechanical alignment was performed before applying software offsets. During this step, all lateral and anteroposterior software offsets were set to zero. The projector, mirror, and cone were adjusted until the projected circles were centered on the screen, the radial spokes were evenly distributed, and the projected rings appeared symmetric.\\
+
+Software offsets were not used to compensate for large mechanical misalignment. If large offsets were required, the projector, mirror, or cone position was corrected physically.\\
+
+\subsection{Spectral filtering}
+
+A 374/50~nm bandpass filter was placed in the projection path during two-photon imaging experiments. The filter restricted the projected stimulus spectrum to reduce contamination of the fluorescence detection pathway by projector light.\\
+
+\subsection{MATLAB and ViRMEn workflow}
+
+\subsubsection{Software environment}
+
+Visual stimuli were generated and controlled using MATLAB 2018a and ViRMEn. ViRMEn was used as the virtual-reality stimulus engine, based on the Tank-Lab/ViRMEn GitHub repository. MATLAB initialized the experiment, controlled communication with the Arduino or DAQ interface, launched the ViRMEn environment, applied projection correction, and saved timing information.\\
+
+\subsubsection{Conical projection correction}
+
+Because the projection surface was conical, stimulus coordinates were transformed before display. The transformation mapped virtual stimulus coordinates to projector coordinates to reduce geometric distortion on the physical screen.\\
+
+The transformation used the scaling relation:\\
+
+\[
+s = \frac{1}{\alpha r + \beta z}
+\]
+
+with:\\
+
+\[
+\alpha = 1.7, \quad \beta = -1.2
+\]
+
+where $r = \sqrt{x^2 + y^2}$. The normalized displayed radius was:\\
+
+\[
+\rho = rs = \frac{r}{\alpha r + \beta z}
+\]
+
+The transformation-implied cone angle was approximately 59.7$^\circ$, close to the physical cone angle of 56.3$^\circ$. Empirical lateral and anteroposterior shifts were used only for final calibration after mechanical alignment.\\
+
+\subsubsection{Two-photon black-white stimulus}
+
+For two-photon imaging, visual stimulation consisted of alternating black and white stimulus epochs. Each stimulus script lasted 1500 imaging frames and was followed by a 300-frame break period before the next script was presented. Stimulus timing was controlled in MATLAB/ViRMEn and synchronized with imaging acquisition through the Arduino--DAQ interface.\\
+
+\subsubsection{Behavioral white-chamber dots stimulus}
+
+For behavioral testing, the WhiteChamberDots script was used to project moving dot stimuli representing conspecific-like visual objects. The stimulus was presented in the white-chamber configuration.\\
+
+\subsection{Arduino synchronization and frame counting}
+
+For behavioral experiments, camera frame timing was monitored using TTL pulses detected by an Arduino Uno. The camera TTL output was connected to digital pin~2. Each rising TTL edge triggered an interrupt and was counted as one acquired frame. Frame counts were transmitted to MATLAB through serial communication at 115200 baud.\\
+
+For two-photon imaging, the Arduino--DAQ interface was used to link imaging acquisition with visual-stimulus timing. The imaging acquisition system generated a timing signal that was detected by the Arduino or DAQ interface and used to initiate the MATLAB/ViRMEn stimulus protocol.\\
+
+\subsection{Behavioral MATLAB/ViRMEn implementation}
+
+The WhiteChamber and WhiteChamberDots scripts were implemented as ViRMEn experiments with initialization, runtime, and termination functions. During initialization, the frame threshold was set to 600 frames, the Arduino serial connection was loaded from the shared MATLAB base workspace variable, and timing variables were initialized.\\
+
+During runtime, the scripts read serial messages from the Arduino. Messages were parsed when they matched the format \texttt{FRAME,<frame number>}. The first valid Arduino frame was stored as the start frame. Subsequent frame numbers were logged together with elapsed time and clock time.\\
+
+The scripts terminated automatically when the number of new Arduino frames reached the threshold:\\
+
+\[
+\mathrm{lastArduinoFrame} - \mathrm{startFrame} \geq 600
+\]
+
+The MasterSwitchByDAQ600\_LoadedWorlds script controlled the behavioral workflow by loading the required ViRMEn worlds, communicating with the Arduino serial connection, and switching between experimental conditions based on the frame-threshold logic.\\
+
+\subsection{Practical setup checklist}
+
+\subsubsection{Two-photon stimulation checklist}
+
+\begin{enumerate}
+    \item Confirm that the conical screen is clean and mounted securely.
+    \item Insert the printed A4 paper cone template to confirm centering and fit.
+    \item Remove the paper template and mount the rear-projection film.
+    \item Confirm that the rear-projection film is seated correctly in the retaining grooves.
+    \item Switch on the projector.
+    \item Insert the 374/50~nm bandpass filter.
+    \item Project the calibration image.
+    \item Set software offsets to zero.
+    \item Mechanically align the projector, mirror, and cone.
+    \item Confirm that projected rings and radial spokes are centered and symmetric.
+    \item Connect the Arduino and DAQ interface.
+    \item Open MATLAB 2018a.
+    \item Load the correct ViRMEn environment.
+    \item Confirm the correct serial port and output directory.
+    \item Start imaging acquisition.
+    \item Confirm that the stimulus triggers correctly.
+\end{enumerate}
+
+\subsubsection{Behavioral stimulation checklist}
+
+\begin{enumerate}
+    \item Confirm that the behavioral arena is clean.
+    \item Confirm that the camera is focused on the walking surface.
+    \item Connect the camera TTL output to Arduino digital pin~2.
+    \item Connect Arduino GND to the camera or DAQ ground.
+    \item Connect the Arduino to the computer by USB.
+    \item Open MATLAB 2018a.
+    \item Load the behavioral master script.
+    \item Confirm serial communication at 115200 baud.
+    \item Load the WhiteChamberDots script.
+    \item Transfer one fly into the arena.
+    \item Start acquisition.
+    \item Confirm that frame counts are received in MATLAB.
+\end{enumerate}
+
+\subsection{Troubleshooting}
+
+If the paper cone template did not sit symmetrically inside the screen support, the screen was re-seated and checked for mechanical obstruction before mounting the rear-projection film.\\
+
+If the projected image was off-center, mechanical alignment was corrected before applying software offsets. Large software offsets indicated that the projector, mirror, or cone required physical realignment.\\
+
+If the projected image was clipped at the mirror, the lens-to-mirror distance was reduced or the mirror position was adjusted.\\
+
+If the visual stimulus did not start with imaging acquisition, the DAQ trigger line, Arduino input, MATLAB serial connection, and ViRMEn script selection were checked.\\
+
+If MATLAB did not receive frame counts, the Arduino serial monitor was used to confirm that TTL pulses were detected. The camera TTL output, Arduino digital pin~2, and common ground connection were checked.\\
+
+If fluorescence recordings showed projector contamination, the position and orientation of the 374/50~nm filter were checked and projector intensity was reduced if necessary.\\
+
+If the projection film was wrinkled, the film was removed and reinserted into the retaining grooves under light tension. The grooves were checked for residual support material or print defects.\\

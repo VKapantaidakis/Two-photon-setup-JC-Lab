@@ -1,0 +1,25 @@
+# MATLAB temporary/cache files
+*.asv
+*.m~
+*.fig
+*.mat
+
+# Data outputs (keep raw data outside this repository unless explicitly intended)
+data/
+*.avi
+*.mp4
+*.tif
+*.tiff
+*.h5
+*.csv
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python/R caches if analysis is extended later
+__pycache__/
+*.pyc
+.Rhistory
