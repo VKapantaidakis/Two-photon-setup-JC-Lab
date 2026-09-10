@@ -1,0 +1,11 @@
+Paste this into the repo's "About" box on GitHub (gear icon, top right):
+
+DESCRIPTION
+-----------
+Two-photon imaging + visual stimulation rig for tethered Drosophila by Vasilis Kapantaidakis (JC Lab, University of Groningen). Basler GigE camera, FicTrac treadmill tracking, ViRMEn worlds on a conical screen, Arduino frame-trigger sync. Full setup and replication guide for Ubuntu 24.04 + MATLAB R2014b.
+
+TOPICS (add these tags)
+-----------------------
+drosophila  two-photon  calcium-imaging  neuroscience  virtual-reality
+fictrac  virmen  matlab  arduino  basler  pylon  behaviour  ubuntu
+spherical-treadmill  visual-stimulation

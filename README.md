@@ -2,8 +2,10 @@
 
 Two-photon imaging and behaviour setup for tethered *Drosophila*. A **Basler GigE camera** tracks a spherical treadmill through **FicTrac**, a **ViRMEn** virtual world is projected onto a **conical screen**, and an **Arduino** timestamps every two-photon frame trigger so imaging and behaviour can be aligned offline.
 
-Built and documented on **Ubuntu 24.04 LTS** with **MATLAB R2014b**.
-**JC Lab (Billeter Lab), University of Groningen.**
+**Author:** Vasilis Kapantaidakis
+**Lab:** JC Lab (Billeter Lab), Groningen Institute for Evolutionary Life Sciences (GELIFES), University of Groningen
+**Experiment type:** two-photon calcium imaging with simultaneous visual-stimulation behaviour in tethered *Drosophila melanogaster* on a spherical treadmill
+**Platform:** Ubuntu 24.04 LTS · MATLAB R2014b · FicTrac · ViRMEn · Basler Pylon · Arduino
 
 Everything here was run on a real machine and the commands are reproduced verbatim, including the workarounds for the awkward combinations (a 2014 MATLAB on a 2024 Linux, a Pylon SDK newer than the FicTrac fork expects, GigE over a USB-Ethernet adapter).
 
@@ -72,6 +74,16 @@ docs/       the guides above
 3. **MATLAB R2014b on Linux only sees `/dev/ttyS*`.** Your Arduino on `/dev/ttyACM0` is invisible until you symlink it. [→ 05](docs/05-arduino-daq.md)
 4. **Do not enable jumbo frames** on a USB-Ethernet adapter. Pylon's optimiser sets MTU 9000, ping still works, and video silently dies. [→ 01](docs/01-basler-camera.md)
 5. **One program per device.** Pylon Viewer blocks FicTrac; the DAQ monitor blocks the experiment script. Wait ~8 s after killing a client for the GigE heartbeat to expire. [→ 99](docs/99-troubleshooting.md)
+
+## Citing / reusing this setup
+
+If this documentation helps you build or repair a rig, a note or citation is appreciated:
+
+> Kapantaidakis, V. *Two Photon Setup — JC Lab: a replication guide for a tethered-fly
+> two-photon imaging and conical visual stimulation rig.* JC Lab (Billeter Lab),
+> University of Groningen, 2026. https://github.com/VKapantaidakis/Two-photon-setup-JC-Lab
+
+The 3D printed optomechanics are a third-party design — see [docs/07](docs/07-3d-printed-parts.md) for attribution.
 
 ## Contact
 

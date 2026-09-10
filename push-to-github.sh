@@ -1,23 +1,21 @@
 #!/bin/bash
-# Push this repository to a NEW, EMPTY GitHub repository.
+# Push this repository to https://github.com/VKapantaidakis/Two-photon-setup-JC-Lab
 #
-# 1. Create an empty repo on GitHub first (no README, no .gitignore, no licence):
-#       https://github.com/new
-#    Suggested name: two-photon-setup-JC-Lab
+# Run:   ./push-to-github.sh
 #
-# 2. Run:
-#       ./push-to-github.sh <github-username> [repo-name]
+# Git will ask for your GitHub username and password. For the password use a
+# PERSONAL ACCESS TOKEN (github.com/settings/tokens -> Generate new token
+# (classic) -> tick "repo"). GitHub no longer accepts account passwords.
 
 set -e
-USER="${1:?Usage: ./push-to-github.sh <github-username> [repo-name]}"
-REPO="${2:-two-photon-setup-JC-Lab}"
+REMOTE="https://github.com/VKapantaidakis/Two-photon-setup-JC-Lab.git"
 
 git remote remove origin 2>/dev/null || true
-git remote add origin "https://github.com/${USER}/${REPO}.git"
+git remote add origin "$REMOTE"
 git branch -M main
 
-echo ">> Pushing to https://github.com/${USER}/${REPO}"
+echo ">> Pushing to $REMOTE"
 git push -u origin main
 
 echo
-echo "Done: https://github.com/${USER}/${REPO}"
+echo "Done: https://github.com/VKapantaidakis/Two-photon-setup-JC-Lab"
