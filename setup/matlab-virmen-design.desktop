@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=MATLAB ViRMEn DESIGN (software GL)
+Comment=Build/edit worlds - design panels render. DO NOT run experiments (segfault).
+Exec=env LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libncurses.so.5:/usr/lib/x86_64-linux-gnu/libstdc++.so.6:/usr/lib/x86_64-linux-gnu/libfreetype.so.6 /usr/local/MATLAB/R2014b/bin/matlab -softwareopengl -desktop
+Icon=/usr/local/MATLAB/R2014b/toolbox/shared/hwconnectinstaller/resources/MatlabIcon.png
+Categories=Development;Science;
+Terminal=false
+StartupNotify=true

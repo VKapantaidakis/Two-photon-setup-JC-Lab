@@ -1,0 +1,28 @@
+Patch: ViRMEn 2016-02-12  bin/gui/updateFigures.m  -- list Linux mex files
+
+The GUI builds its movement and transformation menus from platform-specific
+mex files, with cases for PCWIN / PCWIN64 / MACI64 but none for GLNXA64. On
+Linux the transformation list comes back empty and the GUI crashes at startup:
+
+  Index exceeds matrix dimensions.
+  Error in updateFigures (line 494)
+          handles.exper.transformationFunction = str2func(str{1});
+
+Add a GLNXA64 case in BOTH blocks.
+
+--- movements block (~line 455) ---
+         case 'MACI64'
+             mf = [mf; dir([path filesep '..' filesep '..' filesep 'movements' filesep '*.mexmaci64'])];
++        case 'GLNXA64'
++            mf = [mf; dir([path filesep '..' filesep '..' filesep 'movements' filesep '*.mexa64'])];
+     end
+
+--- transformations block (~line 480) ---
+         case 'MACI64'
+             mf = [mf; dir([path filesep '..' filesep '..' filesep 'transformations' filesep '*.mexmaci64'])];
++        case 'GLNXA64'
++            mf = [mf; dir([path filesep '..' filesep '..' filesep 'transformations' filesep '*.mexa64'])];
+     end
+
+Verify:  grep -c "GLNXA64" bin/gui/updateFigures.m    -> 2
+Then in MATLAB: clear functions; rehash

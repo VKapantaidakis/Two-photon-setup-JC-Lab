@@ -1,0 +1,19 @@
+Patch: ViRMEn 2016-02-12  bin/virmenMake.m  -- build on Linux
+
+Two problems:
+ 1. C files are compiled in C90 mode, which rejects C++ style // comments.
+ 2. There is no branch for computer == 'GLNXA64', so GLFW files fail with
+    "Unsupported compilation architecture."
+
+--- 1. force C99 on the non-GLFW compile (inside the  if ~isGLFW  branch) ---
+-            mex(f);
++            mex('CFLAGS="$CFLAGS -std=c99 -fPIC"',f);
+
+--- 2. add a Linux branch after the MACI64 case ---
+                     elseif strcmp(computer, 'MACI64')
+                         mex('-L./GLFW','-v','-lglfw.3','LDFLAGS="\$LDFLAGS','-framework','Cocoa','-framework','OpenGL','-framework','IOKit','-framework','CoreVideo"','-outdir',currentDir,f);
++                    elseif strcmp(computer, 'GLNXA64')
++                        mex('-lglfw','-lGL','CFLAGS="$CFLAGS -std=c99 -fPIC"','-outdir',currentDir,f);
+                     else
+
+Then run virmenMake TWICE in MATLAB.

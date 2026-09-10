@@ -1,0 +1,19 @@
+Patch: FicTrac (neurophysiology-expertise-unit/fictrac-basler) for modern Pylon (7/8)
+
+The fork includes a USB3-specific header that does not exist in Pylon 7/8 --
+there is no pylon/usb/ directory at all. The source only uses the generic
+Pylon::CInstantCamera, which drives GigE and USB3 alike, so swapping to the
+transport-agnostic header is sufficient.
+
+Symptom without this patch:
+  fatal error: pylon/usb/BaslerUsbInstantCameraArray.h: No such file or directory
+
+--- a/include/BaslerSource.h
++++ b/include/BaslerSource.h
+@@ -13,7 +13,7 @@
+-#include <pylon/usb/BaslerUsbInstantCameraArray.h>
++#include <pylon/InstantCameraArray.h>
+
+Apply with:
+  sed -i 's|#include <pylon/usb/BaslerUsbInstantCameraArray.h>|#include <pylon/InstantCameraArray.h>|' \
+    ~/fictrac/include/BaslerSource.h

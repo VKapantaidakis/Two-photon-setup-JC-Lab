@@ -1,0 +1,14 @@
+# MATLAB
+*.asv
+*.m~
+slprj/
+
+# experiment output
+ExperimentData/
+*.dat
+fictrac-*.log
+daq_log_*.csv
+
+# OS
+.DS_Store
+Thumbs.db
